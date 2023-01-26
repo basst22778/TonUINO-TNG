@@ -8,6 +8,9 @@
 #include "mp3.hpp"
 #include "modifier.hpp"
 #include "timer.hpp"
+#ifdef NeoPixels
+#include "neo_pixels.hpp"
+#endif
 
 class Tonuino {
 public:
@@ -38,6 +41,9 @@ public:
   Commands& getCommands () { return commands ; }
   Settings& getSettings () { return settings ; }
   Chip_card& getChipCard() { return chip_card; }
+  #ifdef NeoPixels
+  Neo_pixels& getNeoPixels() { return neo_pixels; }
+  #endif
   static uint32_t generateRamdomSeed();
 
   void shutdown();
@@ -63,6 +69,10 @@ private:
                                            };
   Chip_card            chip_card           {mp3};
 
+#ifdef NeoPixels
+  Neo_pixels neo_pixels{};
+#endif
+
   friend class Base;
 
   Modifier             noneModifier        {*this, mp3, settings};
@@ -72,6 +82,9 @@ private:
   ToddlerMode          toddlerMode         {*this, mp3, settings};
   KindergardenMode     kindergardenMode    {*this, mp3, settings};
   RepeatSingleModifier repeatSingleModifier{*this, mp3, settings};
+  #ifdef NeoPixels
+  NightLight           nightLight          {*this, mp3, settings};
+  #endif
   //FeedbackModifier     feedbackModifier    {*this, mp3, settings};
 
   Modifier*            activeModifier      {&noneModifier};

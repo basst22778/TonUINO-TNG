@@ -2,6 +2,9 @@
 
 #include <Arduino.h>
 #include <avr/sleep.h>
+#ifdef NeoPixels
+#include <Adafruit_NeoPixel.h>
+#endif
 
 #include "array.hpp"
 #include "chip_card.hpp"
@@ -9,6 +12,9 @@
 #include "constants.hpp"
 #include "logger.hpp"
 #include "state_machine.hpp"
+#ifdef NeoPixels
+#include "neo_pixels.hpp"
+#endif
 
 namespace {
 
@@ -49,6 +55,10 @@ void Tonuino::setup() {
     settings.loadSettingsFromFlash();
   }
 
+  #ifdef NeoPixels
+  neo_pixels.init();
+  #endif
+
   SM_tonuino::start();
 #if defined ALLinONE || defined ALLinONE_Plus
   digitalWrite(ampEnablePin, getLevel(ampEnablePinType, level::active));
@@ -66,6 +76,10 @@ void Tonuino::loop() {
   mp3.loop();
 
   activeModifier->loop();
+
+  #ifdef NeoPixels
+  neo_pixels.loop();
+  #endif
 
   SM_tonuino::dispatch(command_e(commands.getCommandRaw()));
   SM_tonuino::dispatch(card_e(chip_card.getCardEvent()));
@@ -176,7 +190,9 @@ void Tonuino::previousTrack(uint8_t tracks) {
     const uint8_t trackToSave = (mp3.getCurrentTrack() > numTracksInFolder) ? mp3.getCurrentTrack()-1 : 1;
     settings.writeFolderSettingToFlash(myFolder->folder, trackToSave);
   }
-  mp3.playPrevious(tracks);
+  if (mp3.getCurrentTrack() > 1) {
+    mp3.playPrevious(tracks);
+  }
 }
 
 // Funktionen für den Standby Timer (z.B. über Pololu-Switch oder Mosfet)
@@ -253,6 +269,11 @@ bool Tonuino::specialCard(const nfcTagObject &nfcTag) {
   case pmode_t::repeat_single:LOG(card_log, s_info, F("act. repeatSingleModifier"));
                              mp3.playAdvertisement(advertTracks::t_260_activate_mod_card, false/*olnyIfIsPlaying*/);
                              activeModifier = &repeatSingleModifier                           ;break;
+  #ifdef NeoPixels
+  case pmode_t::night_light:  LOG(card_log, s_info, F("act. nightLight"));
+                             mp3.playAdvertisement(advertTracks::t_260_activate_mod_card, false/*olnyIfIsPlaying*/);
+                             activeModifier = &nightLight                                     ;break;
+  #endif                          
   default:                   return false;
   }
   if (oldModifier != activeModifier)

@@ -11,6 +11,9 @@ const __FlashStringHelper* str_SleepTimer          () { return F("SleepTimer")  
 const __FlashStringHelper* str_FreezeDance         () { return F("FreezeDance") ; }
 const __FlashStringHelper* str_KindergardenMode    () { return F("Kita")        ; }
 const __FlashStringHelper* str_RepeatSingleModifier() { return F("RepeatSingle"); }
+#ifdef NeoPixels
+const __FlashStringHelper* str_NightLight          () { return F("NightLight")  ; }
+#endif
 
 } // anonymous namespace
 
@@ -78,6 +81,18 @@ bool RepeatSingleModifier::handleNext() {
 bool RepeatSingleModifier::handlePrevious() {
   return handleNext();
 }
+
+#ifdef NeoPixels
+void NightLight::loop() {
+  LOG(modifier_log, s_info, str_NightLight(), F(" -> DISPLAY light light!"));
+  tonuino.getNeoPixels().displayNightLight();
+}
+
+void NightLight::init() {
+  mp3.playAdvertisement(advertTracks::t_306_night_light);
+}
+
+#endif
 
 //bool FeedbackModifier::handleVolumeDown() {
 //  if (volume > settings.minVolume) {

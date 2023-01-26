@@ -6,6 +6,9 @@
 #include "chip_card.hpp"
 #include "mp3.hpp"
 #include "timer.hpp"
+#if defined NeoPixels
+#include "neo_pixels.hpp"
+#endif
 
 class Tonuino;
 
@@ -67,6 +70,9 @@ protected:
   static Commands       &commands;
   static Settings       &settings;
   static Chip_card      &chip_card;
+  #if defined NeoPixels
+  static Neo_pixels     &neo_pixels;
+  #endif
 
   static Timer          timer;
   static bool           waitForPlayFinish; // with this it needs 66 Byte lesser program code ;-)
@@ -270,6 +276,11 @@ public:
     minVolume,
     initVolume,
     eq,
+    #ifdef NeoPixels
+    neoPixelHue,
+    neoPixelBaseValue,
+    neoPixelNightLightValue,
+    #endif
   };
   static Type type;
 };
