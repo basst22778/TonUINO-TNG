@@ -32,6 +32,8 @@ Allgemeine Anleitungen zum Einrichten der IDE findet man hier [www.tonuino.de/TN
 Die SD Karte (Ordner mp3 und advert) hat sich gegenüber der Version 2.x geändert. Hier kann man die Dateien downloaden: [www.tonuino.de/TNG](https://www.tonuino.de/TNG)
 
 # Change Log
+## Version 3.1.2.1 (05.02.2023)
+- Support of Adafruit NeoPixel - merged from https://github.com/tonuino/TonUINO-TNG/commit/606da0d0982c14b2a7a862442f84ff271b9c532b
 
 ## Version 3.1.2 (04.02.2023)
 - [Issue 054](https://github.com/tonuino/TonUINO-TNG/issues/54): For classic variant: the shutdownPin should be HIGH on shutdown for the POLOLU switch
