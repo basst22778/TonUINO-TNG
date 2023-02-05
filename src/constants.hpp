@@ -7,7 +7,7 @@
 // Bitte die passende Platine durch entfernen der Kommentare in einer der folgenden Zeilen auswählen
 //#define TonUINO_Classic
 //#define ALLinONE
-//#define ALLinONE_Plus
+#define ALLinONE_Plus
 
 // uncomment the below line to enable five button support (already enabled for AiO and AiO+)
 // um dedizierte Lauter-/Leiserknöpfe zu haben bitte die nächste Zeile auskommentieren (Standard bei AiO und AiO+)
@@ -23,6 +23,10 @@
 // uncomment the below line to support the MH2024K16SS chip on the DfMiniMp3 player
 // um den Chip MH2024K16SS auf dem DfMiniMp3 Player zu ünterstützen bitte in der nächste Zeile den Kommentar entfernen
 //#define DFMiniMp3_T_CHIP_VARIANT Mp3ChipMH2024K16SS
+
+// uncomment the below line to enable Adafruit NeoPixels integration
+// um die Integration von Adafruit NeoPixels zu aktivieren, bitte die nächste Zeile auskommentieren
+#define NeoPixels
 
 // ####### helper for level ############################
 
@@ -80,6 +84,14 @@ inline constexpr uint8_t       shutdownPin     = 7;
 inline constexpr levelType     shutdownPinType = levelType::activeHigh;
 inline constexpr uint8_t       openAnalogPin   = A7;
 inline constexpr unsigned long cycleTime       = 50;
+
+// ####### NeoPixel#####################################
+
+#ifdef NeoPixels
+inline constexpr uint8_t NeoPixelPin = 18;
+inline constexpr uint8_t NeoPixelCount = 12;
+inline constexpr uint8_t NeoPixelBrightness = 10;
+#endif /* NeoPixels */
 #endif /* TonUINO_Classic */
 
 #ifdef ALLinONE_Plus
@@ -130,6 +142,14 @@ inline constexpr uint8_t       usbAccessPin     = 20;
 inline constexpr levelType     usbAccessPinType = levelType::activeHigh;
 inline constexpr uint8_t       openAnalogPin    = A7;
 inline constexpr unsigned long cycleTime        = 50;
+
+// ####### NeoPixels#####################################
+
+#ifdef NeoPixels
+inline constexpr uint8_t NeoPixelPin = 18;
+inline constexpr uint8_t NeoPixelCount = 12;
+inline constexpr uint8_t NeoPixelBrightness = 20;
+#endif /* NeoPixels */
 #endif /* ALLinONE_Plus */
 
 #ifdef ALLinONE
@@ -180,6 +200,14 @@ inline constexpr uint8_t       usbAccessPin     = A5;
 inline constexpr levelType     usbAccessPinType = levelType::activeHigh;
 inline constexpr uint8_t       openAnalogPin    = A0;
 inline constexpr unsigned long cycleTime        = 50;
+
+// ####### NeoPixels#####################################
+
+#ifdef NeoPixels
+inline constexpr uint8_t NeoPixelPin = 18;
+inline constexpr uint8_t NeoPixelCount = 12;
+inline constexpr uint8_t NeoPixelBrightness = 20;
+#endif /* NeoPixels */
 #endif /* ALLinONE */
 
 #endif /* SRC_CONSTANTS_HPP_ */

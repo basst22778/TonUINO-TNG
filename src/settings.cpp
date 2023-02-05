@@ -50,6 +50,11 @@ void Settings::resetSettings() {
   adminMenuPin[2]      =  1;
   adminMenuPin[3]      =  1;
   pauseWhenCardRemoved = false;
+#ifdef NeoPixels
+  neoPixelHue = 0;
+  neoPixelBaseValue = 95;
+  neoPixelNightLightValue = 255;
+#endif
 
   writeSettingsToFlash();
 }
@@ -89,6 +94,11 @@ void Settings::loadSettingsFromFlash() {
   LOG(settings_log, s_info, F("Admin Menu locked: "      ), adminMenuLocked);
   LOG(settings_log, s_info, F("Admin Menu Pin: "         ), adminMenuPin[0], adminMenuPin[1], adminMenuPin[2], adminMenuPin[3]);
   LOG(settings_log, s_info, F("Pause when card removed: "), pauseWhenCardRemoved);
+  #ifdef NeoPixels
+  LOG(settings_log, s_info, F("NeoPixel Hue: "), neoPixelHue);
+  LOG(settings_log, s_info, F("NeoPixel Value: "), neoPixelBaseValue);
+  LOG(settings_log, s_info, F("NeoPixel night light Value: "), neoPixelNightLightValue);
+  #endif
 }
 
 void Settings::writeFolderSettingToFlash(uint8_t folder, uint16_t track) {

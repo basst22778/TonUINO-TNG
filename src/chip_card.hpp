@@ -30,6 +30,9 @@ enum class pmode_t: uint8_t {
   toddler       =   4,
   kindergarden  =   5,
   repeat_single =   6,
+  #ifdef NeoPixels
+  night_light   =   7,
+  #endif
 
   admin_card    = 0xff,
 };

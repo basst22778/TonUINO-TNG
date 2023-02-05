@@ -38,6 +38,11 @@ struct Settings {
   uint8_t     adminMenuLocked;
   pin_t       adminMenuPin;
   bool        pauseWhenCardRemoved;
+  #ifdef NeoPixels
+  uint16_t    neoPixelHue;
+  uint8_t     neoPixelBaseValue;
+  uint8_t     neoPixelNightLightValue;
+  #endif
 };
 
 // emulates EEPROM.put() .get() and .update() on LGT8F328P platform
